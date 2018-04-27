@@ -1,0 +1,22 @@
+{
+  "name": "t3",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "concurrently 'yarn serve' 'yarn stylus'",
+    "serve": "react-scripts start",
+    "stylus": "stylus -w ./src/stylesheets/index.styl -o ./src/index.css",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "stylus": "^0.54.5"
+  }
+}

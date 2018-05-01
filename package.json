@@ -45,16 +45,11 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "concurrently 'yarn serve' 'yarn stylus'",
-    "serve": "node scripts/start.js",
-    "stylus": "stylus -w ./src/stylesheets/index.styl -o ./src/index.css",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
-  "devDependencies": {
-    "concurrently": "^3.5.1",
-    "stylus": "^0.54.5"
-  },
+  "devDependencies": {},
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"

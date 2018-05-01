@@ -13,4 +13,6 @@ body {
   margin: 0;
   background-color: #262E26;
   color: #fff;
+  line-height: 1;
+  overflow-y: hidden;
 }

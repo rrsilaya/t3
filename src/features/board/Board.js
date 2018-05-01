@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 
+import styles from './styles.css';
+
 class Board extends Component {
   render() {
     return (
-      <h1>Board</h1>
+      <div className={styles.wrapper}>
+        <div>X</div>
+        <div>X</div>
+        <div>X</div>
+        <div>O</div>
+        <div>X</div>
+        <div>X</div>
+        <div>X</div>
+        <div>X</div>
+        <div>X</div>
+      </div>
     );
   }
 }

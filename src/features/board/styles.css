@@ -1,0 +1,55 @@
+.wrapper {
+  height: 500px;
+  width: 500px;
+  padding: 15px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.wrapper > div {
+  --border: 1px solid #ECE0A6;
+
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 45px;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.wrapper > div[tagged=""] {
+  cursor: default;
+}
+
+/**
+ * CSS Borders for Grid
+ */
+.wrapper > div:nth-child(2) {
+  border-left: var(--border);
+  border-right: var(--border);
+}
+
+.wrapper > div:nth-child(4) {
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.wrapper > div:nth-child(5) {
+  border: var(--border);
+}
+
+.wrapper > div:nth-child(6) {
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.wrapper > div:nth-child(8) {
+  border-left: var(--border);
+  border-right: var(--border);
+}

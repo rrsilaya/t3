@@ -1,0 +1,16 @@
+/*
+Colors:
+  #262E26
+  #90122E
+  #ECE0A6
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #262E26;
+  color: #fff;
+}

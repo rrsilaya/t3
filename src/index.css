@@ -21,3 +21,14 @@ body {
   line-height: 1;
   overflow: hidden;
 }
+
+.message-enter {
+  transform: translateX(-120%);
+  left: -120%;
+  transition: all 1s;
+}
+
+.message-enter.message-enter-active {
+  transform: translateX(0%);
+  transition: all 1s;
+}

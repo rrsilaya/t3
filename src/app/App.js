@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
+import { CSSTransition } from 'react-transition-group';
 
 import {
   Board,
@@ -15,6 +16,8 @@ class App extends Component {
     this.state = {
       board: Array.from({ length: 9 }, () => ' ').join(''),
       turn: 'X',
+
+      isMessageOpen: false
     }
   }
 
@@ -32,13 +35,31 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isMessageOpen: true })
+    }, 2000);
+  }
+
   render() {
     const { board } = this.state;
 
     return (
       <div className={styles.appWrapper}>
         <Particles params={config} className={styles.background}/>
-        <Message message="Hello" />
+        <CSSTransition
+          in={this.state.isMessageOpen}
+          timeout={1000}
+          classNames="message"
+          unmountOnExit
+          onEntered={() => {
+            setTimeout(() => {
+              this.setState({ isMessageOpen: false });
+            }, 1500)
+          }}
+        >
+          <Message message="Hello" />
+        </CSSTransition>
         <Board board={board} handleBoardTurn={this.handleBoardTurn} />
       </div>
     );

@@ -1,4 +1,3 @@
-let choice;
 var readline = require('readline-sync');
 const checkWinner = (piece, state) => {
   const winnerX = [
@@ -45,8 +44,9 @@ const getAvailableMoves = (piece, state) => {
 
 const AICaller = (piece, state) => {
   const result = aimove(piece, state);
+  const { boardIndex } = result;
   const currentState = state.split('');
-  currentState[choice] = piece;
+  currentState[boardIndex] = piece;
   const nextState = currentState.join('');
   return nextState;
 };
@@ -55,28 +55,28 @@ function aimove(piece, state) {
   const nextPiece = piece === 'X' ? 'O' : 'X';
   const score = checkWinner(nextPiece, state);
   if (score !== 'None') {
-    return score;
+    return { score };
   }
   const availableMoves = getAvailableMoves(piece, state);
-  const moves = [];
-  const scores = [];
-  for (let i = 0; i < availableMoves.length; i++) {
-    const move = availableMoves[i];
+  const boardStates = availableMoves.map(boardIndex => {
     const currentState = state.split('');
-    currentState[move] = piece;
+    currentState[boardIndex] = piece;
     const nextState = currentState.join('');
-    scores.push(aimove(nextPiece, nextState));
-    moves.push(move);
-  }
+    const score = aimove(nextPiece, nextState).score;
+    return { score, boardIndex };
+  });
+
+  const scores = boardStates.reduce((prev, curr) => {
+    prev.push(curr.score);
+    return prev;
+  }, []);
+  let index;
   if (piece === 'O') {
-    const index = scores.indexOf(Math.max(...scores));
-    choice = moves[index];
-    return scores[index];
+    index = scores.indexOf(Math.max(...scores));
   } else {
-    const index = scores.indexOf(Math.min(...scores));
-    choice = moves[index];
-    return scores[index];
+    index = scores.indexOf(Math.min(...scores));
   }
+  return boardStates[index];
 }
 let piece = '';
 let state = '         ';
@@ -96,7 +96,7 @@ for (let i = 0; i < 9; i++) {
   if (i % 2 !== 0) {
     state = AICaller(piece, state);
   } else {
-    let move = parseInt(readline.question('Move: '), 10) - 1;
+    let move = parseInt(readline.question('Move: '), 10);
     state = state.split('');
     state[move] = piece;
     state = state.join('');

@@ -1,0 +1,23 @@
+.wrapper {
+  width: 120%;
+  height: 200px;
+  background-color: #ECE0A6;
+
+  position: absolute;
+  left: -10%;
+  top: calc(50vh - 100px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transform: skew(-15deg);
+}
+
+.wrapper > div {
+  transform: skew(15deg);
+  font-family: 'HPC';
+  font-size: 40pt;
+  color: #262E26;
+  font-weight: bold;
+}

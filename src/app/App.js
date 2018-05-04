@@ -10,8 +10,8 @@ import config from './particles';
 import styles from './styles.css';
 
 const Player = {
-  user: 'O',
-  ai: 'X'
+  user: 'X',
+  ai: 'O'
 };
 
 const PLAYER = 1,
@@ -24,7 +24,7 @@ class App extends Component {
     super();
     this.state = {
       board: Array.from({ length: 9 }, () => ' ').join(''),
-      winner: 'None',
+      winner: 'None'
     };
   }
 
@@ -32,7 +32,7 @@ class App extends Component {
     if (Math.round(Math.random())) {
       this.setState({ board: AICaller(Player.ai, this.state.board) });
     }
-  }
+  };
 
   handleGameReset = () => {
     let board = Array.from({ length: 9 }, () => ' ').join('');
@@ -42,21 +42,21 @@ class App extends Component {
     }
 
     this.setState({ board, winner: INGAME });
-  }
+  };
 
   handleBoardTurn = index => {
-    const { turn } = this.state;
     let board = [...this.state.board];
     index = parseFloat(index);
 
     if (board[index] === ' ') {
-      board[parseFloat(index)] = Player.user;
+      board[index] = Player.user;
 
-      let winner = checkWinner(Player.ai, board.join(''));
-
+      let winner = checkWinner(Player.user, board.join(''));
+      console.log(winner, board.join(''));
       if (winner !== PLAYER) {
         board = AICaller(Player.ai, board.join(''));
         winner = checkWinner(Player.ai, board);
+        winner = winner === 1 ? -1 : winner;
       }
 
       this.setState({ board, winner });
@@ -92,7 +92,13 @@ class App extends Component {
           }}>
           <Message
             message={
-              winner === PLAYER ? 'You won!' : winner === AI ? 'You lose :(.' : "It's a draw."
+              winner === PLAYER
+                ? 'You won!'
+                : winner === AI
+                  ? 'You lose :(.'
+                  : winner === DRAW
+                    ? "It's a draw."
+                    : ''
             }
           />
         </CSSTransition>

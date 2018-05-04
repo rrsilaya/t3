@@ -21,3 +21,16 @@
   color: #262E26;
   font-weight: bold;
 }
+
+.messageEnter {
+  transform: translateX(-120%);
+  left: -120%;
+  opacity: 0;
+  transition: all 1s;
+}
+
+.messageEnterActive {
+  transform: translateX(0%);
+  opacity: 1;
+  transition: all 1s;
+}

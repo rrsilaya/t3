@@ -45,21 +45,23 @@ class App extends Component {
   };
 
   handleBoardTurn = index => {
-    let board = [...this.state.board];
-    index = parseFloat(index);
+    if (this.state.winner === 'None') {
+      let board = [...this.state.board];
+      index = parseFloat(index);
 
-    if (board[index] === ' ') {
-      board[index] = Player.user;
+      if (board[index] === ' ') {
+        board[index] = Player.user;
 
-      let winner = checkWinner(Player.user, board.join(''));
-      console.log(winner, board.join(''));
-      if (winner !== PLAYER) {
-        board = AICaller(Player.ai, board.join(''));
-        winner = checkWinner(Player.ai, board);
-        winner = winner === 1 ? -1 : winner;
+        let winner = checkWinner(Player.user, board.join(''));
+        console.log(winner, board.join(''));
+        if (winner !== PLAYER) {
+          board = AICaller(Player.ai, board.join(''));
+          winner = checkWinner(Player.ai, board);
+          winner = winner === 1 ? -1 : winner;
+        }
+
+        this.setState({ board, winner });
       }
-
-      this.setState({ board, winner });
     }
   };
 
@@ -76,22 +78,20 @@ class App extends Component {
     return (
       <div className={styles.appWrapper}>
         <Particles params={config} className={styles.background} />
-          {
-            winner !== INGAME && (
-            <Message
-              play={this.handleGameReset}
-              message={
-                winner === PLAYER
-                  ? 'You won!'
-                  : winner === AI
-                    ? 'You lose :(.'
-                    : winner === DRAW
-                      ? "It's a draw."
-                      : ''
-              }
-            />
-            )
-          }
+        {winner !== INGAME && (
+          <Message
+            play={this.handleGameReset}
+            message={
+              winner === PLAYER
+                ? 'You won!'
+                : winner === AI
+                  ? 'You lose :(.'
+                  : winner === DRAW
+                    ? "It's a draw."
+                    : ''
+            }
+          />
+        )}
         <Board board={board} handleBoardTurn={this.handleBoardTurn} />
       </div>
     );

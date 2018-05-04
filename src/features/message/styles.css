@@ -20,6 +20,16 @@
   font-size: 40pt;
   color: #262E26;
   font-weight: bold;
+  text-align: center;
+}
+
+.wrapper > div > button {
+  border: 2px solid #262E26;
+  background: none;
+  padding: 5px 15px;
+  font-size: 14px;
+  font-family: 'HPC';
+  cursor: pointer;
 }
 
 .messageEnter {

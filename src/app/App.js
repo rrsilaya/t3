@@ -76,33 +76,22 @@ class App extends Component {
     return (
       <div className={styles.appWrapper}>
         <Particles params={config} className={styles.background} />
-        <CSSTransition
-          in={winner !== INGAME}
-          timeout={1000}
-          classNames={{
-            enter: styles.messageEnter,
-            enterActive: styles.messageEnterActive
-          }}
-          unmountOnExit
-          appear={true}
-          onEntered={() => {
-            setTimeout(() => {
-              this.setState({ isMessageOpen: false });
-            }, 5000);
-          }}>
-          <Message
-            message={
-              winner === PLAYER
-                ? 'You won!'
-                : winner === AI
-                  ? 'You lose :(.'
-                  : winner === DRAW
-                    ? "It's a draw."
-                    : ''
-            }
-          />
-        </CSSTransition>
-        <button onClick={this.handleGameReset}>Restart Game</button>
+          {
+            winner !== INGAME && (
+            <Message
+              play={this.handleGameReset}
+              message={
+                winner === PLAYER
+                  ? 'You won!'
+                  : winner === AI
+                    ? 'You lose :(.'
+                    : winner === DRAW
+                      ? "It's a draw."
+                      : ''
+              }
+            />
+            )
+          }
         <Board board={board} handleBoardTurn={this.handleBoardTurn} />
       </div>
     );

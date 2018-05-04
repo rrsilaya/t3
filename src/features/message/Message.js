@@ -4,11 +4,15 @@ import styles from './styles.css';
 
 class Message extends Component {
   render() {
-    const { message } = this.props;
+    const { message, play } = this.props;
 
     return (
       <div className={styles.wrapper}>
-        <div>{message}</div>
+        <div>
+          <span>{message}</span>
+          <br/>
+          <button onClick={play}>Play Again</button>
+        </div>
       </div>
     );
   }

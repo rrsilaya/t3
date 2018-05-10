@@ -24,13 +24,14 @@ class App extends Component {
     super();
     this.state = {
       board: Array.from({ length: 9 }, () => ' ').join(''),
-      winner: 'None'
+      winner: 'None',
+      turn: 0
     };
   }
 
   handleRandomTurn = () => {
     if (Math.round(Math.random())) {
-      this.setState({ board: AICaller(Player.ai, this.state.board) });
+      this.setState({ board: AICaller(Player.ai, this.state.board, true) });
     }
   };
 
@@ -38,7 +39,7 @@ class App extends Component {
     let board = Array.from({ length: 9 }, () => ' ').join('');
 
     if (Math.round(Math.random())) {
-      board = AICaller(Player.ai, board);
+      board = AICaller(Player.ai, board, true);
     }
 
     this.setState({ board, winner: INGAME });
@@ -55,12 +56,12 @@ class App extends Component {
         let winner = checkWinner(Player.user, board.join(''));
         console.log(winner, board.join(''));
         if (winner !== PLAYER) {
-          board = AICaller(Player.ai, board.join(''));
+          board = AICaller(Player.ai, board.join(''), this.state.turn < 4);
           winner = checkWinner(Player.ai, board);
           winner = winner === 1 ? -1 : winner;
         }
 
-        this.setState({ board, winner });
+        this.setState({ board, winner, turn: this.state.turn + 1 });
       }
     }
   };

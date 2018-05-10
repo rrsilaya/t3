@@ -45,11 +45,19 @@ const getAvailableMoves = (piece, state) => {
   }, []);
 };
 
-export const AICaller = (piece, state) => {
-  const { boardIndex } = aimove(piece, state);
+export const AICaller = (piece, state, isRandTurn) => {
+  let index;
+
+  if (isRandTurn) {
+    do {
+      index = Math.floor(Math.random() * 9);
+    } while (state[index] !== ' ');
+  } else {
+    index = aimove(piece, state).boardIndex;
+  }
 
   const currentState = state.split('');
-  currentState[boardIndex] = piece;
+  currentState[index] = piece;
 
   return currentState.join('');
 };

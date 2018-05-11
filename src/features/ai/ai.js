@@ -62,20 +62,34 @@ export const AICaller = (piece, state, isRandTurn) => {
   return currentState.join('');
 };
 
-function aimove(piece, state) {
+function aimove(piece, state, alpha = -2, beta = 2) {
   const nextPiece = piece === 'X' ? 'O' : 'X';
-  const score = checkWinner(nextPiece, state);
+  let score = checkWinner(nextPiece, state);
 
-  if (score !== 'None') {
+  console.log(alpha, beta);
+  if (score !== 'None' || alpha > beta) {
     return { score };
   }
 
   const availableMoves = getAvailableMoves(piece, state);
+
   const boardStates = availableMoves.map(boardIndex => {
     const currentState = state.split('');
     currentState[boardIndex] = piece;
 
-    const { score } = aimove(nextPiece, currentState.join(''));
+    if (nextPiece === 'O') {
+      // Alpha, max
+      score = aimove(nextPiece, currentState.join(''), score === 'None' ? alpha : Math.min(score, alpha), beta);
+      console.log('>> ', score);
+      score = score.score;
+    } else {
+      // Beta, min
+      score = aimove(nextPiece, currentState.join(''), alpha, score === 'None' ? beta : Math.min(score, beta));
+      console.log('>> ', score);
+      score = score.score;
+    }
+
+    // const { score } = aimove(nextPiece, currentState.join('')).score;
     return { score, boardIndex };
   });
 
@@ -108,7 +122,7 @@ function aimove(piece, state) {
 //     |${state.slice(6, 9)}|
 //     =====`
 //   );
-//   if (i % 2 !== 0) {
+//   if (true || i % 2 !== 0) {
 //     state = AICaller(piece, state);
 //   } else {
 //     let move = parseInt(readline.question('Move: '), 10);
